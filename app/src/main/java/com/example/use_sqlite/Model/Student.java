@@ -4,14 +4,14 @@ public class Student {
     private int ID;
     private String Name;
     private String Address;
-    private String Number;
+    private String Phone_Number;
     private String Email;
 
-    public Student(int ID, String name, String address, String number, String email) {
-        this.ID = ID;
+
+    public Student(String name, String address, String number, String email) {
         Name = name;
         Address = address;
-        Number = number;
+        Phone_Number = number;
         Email = email;
     }
 
@@ -39,12 +39,12 @@ public class Student {
         Address = address;
     }
 
-    public String getNumber() {
-        return Number;
+    public String getPhone_Number() {
+        return Phone_Number;
     }
 
-    public void setNumber(String number) {
-        Number = number;
+    public void setPhone_Number(String phone_Number) {
+        Phone_Number = phone_Number;
     }
 
     public String getEmail() {
