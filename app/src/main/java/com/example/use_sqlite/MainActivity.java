@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.use_sqlite.Model.Student;
 import com.example.use_sqlite.adapter.CustomAdapter;
@@ -19,7 +21,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     private EditText editName,editPhoneNumber,editEmail,editAddress;
-    private Button btnSave;
+    private Button btnSave,btnUpdate;
+    private TextView tvID;
     private ListView lvStudent;
     private CustomAdapter customAdapter;
     private List<Student> studentList;
@@ -29,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         final DBStudent dbStudent=new DBStudent(this);
         init();
-
         studentList=dbStudent.getAllStudent();
         setCustomAdapter();
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -39,14 +41,33 @@ public class MainActivity extends AppCompatActivity {
                 if(student !=null)
                 {
                     dbStudent.addStudent(student);
-                }
 
+                }
+                studentList.clear();
+                studentList.addAll(dbStudent.getAllStudent());
+                setCustomAdapter();
+
+            }
+        });
+        lvStudent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Student studentItem=studentList.get(position);
+                showItem(studentItem);
             }
         });
 
 
 
 
+    }
+    private void showItem(Student studentItem)
+    {
+        tvID.setText("ID: "+studentItem.getID());
+        editName.setText(studentItem.getName());
+        editAddress.setText(studentItem.getAddress());
+        editPhoneNumber.setText(studentItem.getPhone_Number());
+        editEmail.setText(studentItem.getEmail());
     }
     private void init()
     {
@@ -56,15 +77,21 @@ public class MainActivity extends AppCompatActivity {
         editEmail=(EditText)findViewById(R.id.edit_Email);
         btnSave=(Button)findViewById(R.id.btn_Save);
         lvStudent=(ListView) findViewById(R.id.lv_Student);
-        studentList=new ArrayList<>();
+        tvID=(TextView)findViewById(R.id.tv_ID);
+        btnUpdate=(Button)findViewById(R.id.btn_Update);
     }
     private void setCustomAdapter()
     {
         if(customAdapter==null)
         {
             customAdapter=new CustomAdapter(this,R.layout.row_list_student,studentList);
+            lvStudent.setAdapter(customAdapter);
+        }else
+        {
+            customAdapter.notifyDataSetChanged();
+            lvStudent.setSelection(customAdapter.getCount()-1);
         }
-        lvStudent.setAdapter(customAdapter);
+
     }
     private Student createStudent()
     {
