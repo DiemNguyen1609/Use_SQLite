@@ -54,6 +54,14 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Student studentItem=studentList.get(position);
                 showItem(studentItem);
+                btnSave.setClickable(false);
+                btnUpdate.setClickable(true);
+            }
+        });
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 
