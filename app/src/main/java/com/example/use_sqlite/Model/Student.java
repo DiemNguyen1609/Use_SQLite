@@ -14,6 +14,7 @@ public class Student {
         Phone_Number = number;
         Email = email;
     }
+    public Student(){}
 
     public int getID() {
         return ID;
