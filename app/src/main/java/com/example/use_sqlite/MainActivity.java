@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private CustomAdapter customAdapter;
     private List<Student> studentList;
     private Student studentItem;
+    private ImageView imageViewDelete;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +73,14 @@ public class MainActivity extends AppCompatActivity {
                 setCustomAdapter();
             }
         });
+        imageViewDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String id=String.valueOf(studentItem.getID());
+
+            }
+        });
+
 
 
 
@@ -95,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
         tvID=(TextView)findViewById(R.id.tv_ID);
         btnUpdate=(Button)findViewById(R.id.btn_Update);
         studentItem=new Student();
+        imageViewDelete=(ImageView)findViewById(R.id.delete);
     }
     private void setCustomAdapter()
     {
