@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView lvStudent;
     private CustomAdapter customAdapter;
     private List<Student> studentList;
+    private Student studentItem;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         lvStudent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Student studentItem=studentList.get(position);
+                studentItem=studentList.get(position);
                 showItem(studentItem);
                 btnSave.setClickable(false);
                 btnUpdate.setClickable(true);
@@ -62,14 +63,8 @@ public class MainActivity extends AppCompatActivity {
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String id=tvID.getText().toString();
-                Log.d("ID: ",id);
-                String name=editName.getText().toString();
-                Log.d("name: ",name);
-                String address=editAddress.getText().toString();
-                String phone=editPhoneNumber.getText().toString();
-                String email=editEmail.getText().toString();
-                Student student = new Student(name,address,phone,email);
+                Student student= createStudent();
+                String id=String.valueOf(studentItem.getID());
                 dbStudent.updateStudent(student,id);
                 studentList.clear();
                 studentList.addAll(dbStudent.getAllStudent());
@@ -99,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
         lvStudent=(ListView) findViewById(R.id.lv_Student);
         tvID=(TextView)findViewById(R.id.tv_ID);
         btnUpdate=(Button)findViewById(R.id.btn_Update);
+        studentItem=new Student();
     }
     private void setCustomAdapter()
     {
@@ -118,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
         String name=editName.getText().toString();
         String address=String.valueOf(editAddress.getText());
         String email=editEmail.getText().toString();
-        String phoneNumber=editPhoneNumber.getText()+"";
+        String phoneNumber=editPhoneNumber.getText().toString();
         Student student = new Student(name,address,phoneNumber,email);
         return  student;
     }

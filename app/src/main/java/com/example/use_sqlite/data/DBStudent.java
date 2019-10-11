@@ -86,14 +86,15 @@ public class DBStudent extends SQLiteOpenHelper {
             db.close();
         return studentList;
     }
-    public void updateStudent(Student student,String id) {
+    public int updateStudent(Student student,String id) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(NAME, student.getName());
         values.put(ADDRESS, student.getAddress());
         values.put(PHONE_NUMBER, student.getPhone_Number());
         values.put(EMAIL, student.getEmail());
-        db.update(TABLE_NAME, values, ID + " = ?", new String[] { id });
+        int result =db.update(TABLE_NAME, values, ID+" =?", new String[]{String.valueOf(id)});
         db.close();
+      return result;
     }
 }
