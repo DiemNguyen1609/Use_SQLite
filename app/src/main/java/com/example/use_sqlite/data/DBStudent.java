@@ -11,6 +11,7 @@ import com.example.use_sqlite.Model.Student;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NavigableMap;
 
 
 public class DBStudent extends SQLiteOpenHelper {
@@ -84,5 +85,15 @@ public class DBStudent extends SQLiteOpenHelper {
         }
             db.close();
         return studentList;
+    }
+    public void updateStudent(Student student,String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(NAME, student.getName());
+        values.put(ADDRESS, student.getAddress());
+        values.put(PHONE_NUMBER, student.getPhone_Number());
+        values.put(EMAIL, student.getEmail());
+        db.update(TABLE_NAME, values, ID + " = ?", new String[] { id });
+        db.close();
     }
 }

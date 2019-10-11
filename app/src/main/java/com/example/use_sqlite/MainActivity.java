@@ -3,6 +3,7 @@ package com.example.use_sqlite;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -61,7 +62,18 @@ public class MainActivity extends AppCompatActivity {
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                String id=tvID.getText().toString();
+                Log.d("ID: ",id);
+                String name=editName.getText().toString();
+                Log.d("name: ",name);
+                String address=editAddress.getText().toString();
+                String phone=editPhoneNumber.getText().toString();
+                String email=editEmail.getText().toString();
+                Student student = new Student(name,address,phone,email);
+                dbStudent.updateStudent(student,id);
+                studentList.clear();
+                studentList.addAll(dbStudent.getAllStudent());
+                setCustomAdapter();
             }
         });
 
