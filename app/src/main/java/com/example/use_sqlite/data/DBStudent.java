@@ -93,11 +93,11 @@ public class DBStudent extends SQLiteOpenHelper {
         values.put(ADDRESS, student.getAddress());
         values.put(PHONE_NUMBER, student.getPhone_Number());
         values.put(EMAIL, student.getEmail());
-        int result =db.update(TABLE_NAME, values, ID+" =?", new String[]{String.valueOf(id)});
+        int result =db.update(TABLE_NAME, values, ID+" =?", new String[]{id});
         db.close();
       return result;
     }
-    public int deleteStudent(String id)
+    public int deleteStudent(int id)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         int result =db.delete(TABLE_NAME,ID+"=?",new String[]{String.valueOf(id)});

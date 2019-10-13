@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.use_sqlite.Model.Student;
 import com.example.use_sqlite.adapter.CustomAdapter;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private List<Student> studentList;
     private Student studentItem;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         final DBStudent dbStudent=new DBStudent(this);
         init();
         studentList=dbStudent.getAllStudent();
-        setCustomAdapter();
+        setCustomAdapter(dbStudent);
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 studentList.clear();
                 studentList.addAll(dbStudent.getAllStudent());
-                setCustomAdapter();
+                setCustomAdapter(dbStudent);
 
             }
         });
@@ -70,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 dbStudent.updateStudent(student,id);
                 studentList.clear();
                 studentList.addAll(dbStudent.getAllStudent());
-                setCustomAdapter();
+                setCustomAdapter(dbStudent);
             }
         });
 
@@ -80,6 +82,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+    /*public void onButtonClickListner(int position, String value) {
+        Toast.makeText(MainActivity.this, "Button click " + value,
+                Toast.LENGTH_SHORT).show();
+
+    }*/
     private void showItem(Student studentItem)
     {
         tvID.setText("ID: "+studentItem.getID());
@@ -101,11 +108,11 @@ public class MainActivity extends AppCompatActivity {
         studentItem=new Student();
 
     }
-    private void setCustomAdapter()
+    private void setCustomAdapter(DBStudent dbStudent)
     {
         if(customAdapter==null)
         {
-            customAdapter=new CustomAdapter(this,R.layout.row_list_student,studentList);
+            customAdapter=new CustomAdapter(this,R.layout.row_list_student,studentList,dbStudent);
             lvStudent.setAdapter(customAdapter);
         }else
         {

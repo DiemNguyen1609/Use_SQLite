@@ -11,8 +11,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.use_sqlite.MainActivity;
 import com.example.use_sqlite.Model.Student;
 import com.example.use_sqlite.R;
+import com.example.use_sqlite.data.DBStudent;
 
 import java.util.List;
 
@@ -21,18 +24,28 @@ public class CustomAdapter extends ArrayAdapter<Student> {
     private Context context;
     private List<Student> arrayList;
     private int resource;
+    private DBStudent dbStudent;
 
+    /*customButtonListener customListner;
 
-    public CustomAdapter(@NonNull Context context, int resource, @NonNull List<Student> objects) {
+    public interface customButtonListener {
+        public void onButtonClickListner(int position,String value);
+    }
+
+    public void setCustomButtonListner(customButtonListener listener) {
+        this.customListner = listener;
+    }*/
+    public CustomAdapter(@NonNull Context context, int resource, @NonNull List<Student> objects,@NonNull DBStudent dbStudent) {
         super(context, resource, objects);
         this.context = context;
         this.arrayList = objects;
         this.resource = resource;
+        this.dbStudent=dbStudent;
     }
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
        final ViewHolder viewHolder;
        if(convertView==null)
        {
@@ -61,8 +74,19 @@ public class CustomAdapter extends ArrayAdapter<Student> {
            @Override
            public void onClick(View v) {
                String id=viewHolder.tvId.getText()+"";
-               Toast.makeText(getContext(),"Id:"+id,Toast.LENGTH_SHORT).show();
-               arrayList.remove(student);
+               /*if (customListner != null) {
+                   customListner.onButtonClickListner(position,id);
+                   notifyDataSetChanged();
+               }*/
+
+               dbStudent.deleteStudent(Integer.valueOf(id));
+               Toast.makeText(getContext(),id+"",Toast.LENGTH_SHORT).show();
+                   arrayList.clear();
+                   arrayList.addAll(dbStudent.getAllStudent());
+                   notifyDataSetChanged();
+
+
+
 
 
            }
