@@ -75,10 +75,6 @@ public class CustomAdapter extends ArrayAdapter<Student> {
             @Override
             public void onClick(View v) {
                 final String id = viewHolder.tvId.getText() + "";
-               /*if (customListner != null) {
-                   customListner.onButtonClickListner(position,id);
-                   notifyDataSetChanged();
-               }*/
                 AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
                 builder.setTitle("Alert!");
                 builder.setMessage("Do you want to delete this student?");
@@ -86,6 +82,11 @@ public class CustomAdapter extends ArrayAdapter<Student> {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dbStudent.deleteStudent(Integer.valueOf(id));
+                        viewHolder.tvId.setText("");
+                        viewHolder.tvName.setText("");
+                        viewHolder.tvAddress.setText("");
+                        viewHolder.tvPhoneNumber.setText("");
+                        viewHolder.tvEmail.setText("");
                         arrayList.clear();
                         arrayList.addAll(dbStudent.getAllStudent());
                         notifyDataSetChanged();
@@ -99,15 +100,12 @@ public class CustomAdapter extends ArrayAdapter<Student> {
                 });
                 AlertDialog alertDialog=builder.create();
                 alertDialog.show();
-
-
-
             }
         });
 
-
         return convertView;
     }
+
 
     public class ViewHolder
     {

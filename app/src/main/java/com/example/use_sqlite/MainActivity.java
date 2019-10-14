@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
                 studentList.clear();
                 studentList.addAll(dbStudent.getAllStudent());
                 setCustomAdapter(dbStudent);
+                setStatusStart();
+
 
             }
         });
@@ -73,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 studentList.clear();
                 studentList.addAll(dbStudent.getAllStudent());
                 setCustomAdapter(dbStudent);
+                setStatusStart();
             }
         });
 
@@ -87,6 +90,14 @@ public class MainActivity extends AppCompatActivity {
                 Toast.LENGTH_SHORT).show();
 
     }*/
+    public void setStatusStart()
+    {
+        tvID.setText("");
+        editName.setText("");
+        editAddress.setText("");
+        editPhoneNumber.setText("");
+        editEmail.setText("");
+    }
     private void showItem(Student studentItem)
     {
         tvID.setText("ID: "+studentItem.getID());
