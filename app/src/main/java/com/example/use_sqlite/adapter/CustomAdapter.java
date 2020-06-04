@@ -58,8 +58,6 @@ public class CustomAdapter extends ArrayAdapter<Student> {
             viewHolder.tvPhoneNumber = (TextView) convertView.findViewById(R.id.tv_Phone);
             viewHolder.tvEmail = (TextView) convertView.findViewById(R.id.tv_Email);
             viewHolder.imageViewDelete = (ImageView) convertView.findViewById(R.id.delete);
-
-
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
